@@ -38,4 +38,6 @@ The production application is available at [led-table-server-production-ed5hwe.l
 
 Laravel Cloud injects the `REVERB_*` and `VITE_REVERB_*` values for an attached WebSocket application. The Laravel Reverb driver and Echo client in this project are already configured to use those values. Keep `REVERB_APP_SECRET` server-side; do not expose it to browser code.
 
+The firmware reads the public Reverb host and app key from `/display-config`. This endpoint only returns the WebSocket host and public app key; it never returns the app secret. It responds with HTTP 503 until a WebSocket application is attached and its environment has been redeployed.
+
 See the [Laravel Cloud WebSockets documentation](https://laravel.com/cloud/docs/resources/websockets) and [Laravel Reverb documentation](https://laravel.com/docs/13.x/reverb) for cluster configuration and broadcasting details.

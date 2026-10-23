@@ -25,6 +25,24 @@ class DisplayStateController extends Controller
         return response()->json($this->state());
     }
 
+    public function websocketConfig(): JsonResponse
+    {
+        $connection = config('broadcasting.connections.reverb');
+        $host = $connection['options']['host'] ?? null;
+        $key = $connection['key'] ?? null;
+
+        abort_if(
+            ! is_string($host) || $host === '' || ! is_string($key) || $key === '',
+            503,
+            'The WebSocket application is not configured.',
+        );
+
+        return response()->json([
+            'host' => $host,
+            'key' => $key,
+        ]);
+    }
+
     public function update(Request $request): JsonResponse
     {
         $validated = $request->validate([

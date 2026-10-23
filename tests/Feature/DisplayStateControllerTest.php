@@ -63,6 +63,31 @@ class DisplayStateControllerTest extends TestCase
         );
     }
 
+    public function test_websocket_config_exposes_only_public_reverb_settings(): void
+    {
+        config([
+            'broadcasting.connections.reverb.key' => 'public-app-key',
+            'broadcasting.connections.reverb.options.host' => 'ws-example-reverb.laravel.cloud',
+        ]);
+
+        $this->getJson('/display-config')
+            ->assertOk()
+            ->assertExactJson([
+                'host' => 'ws-example-reverb.laravel.cloud',
+                'key' => 'public-app-key',
+            ]);
+    }
+
+    public function test_websocket_config_is_unavailable_without_an_attached_cluster(): void
+    {
+        config([
+            'broadcasting.connections.reverb.key' => null,
+            'broadcasting.connections.reverb.options.host' => null,
+        ]);
+
+        $this->getJson('/display-config')->assertStatus(503);
+    }
+
     public function test_invalid_pixel_colors_are_rejected_without_changing_the_display(): void
     {
         Event::fake([DisplayUpdated::class]);
