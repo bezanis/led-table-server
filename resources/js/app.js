@@ -7,3 +7,5 @@
  */
 
 import './echo';
+import './display-editor';
+import './display-client';
