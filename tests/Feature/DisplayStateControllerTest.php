@@ -86,6 +86,13 @@ class DisplayStateControllerTest extends TestCase
         ]);
 
         $this->getJson('/display-config')->assertStatus(503);
+
+        config([
+            'broadcasting.connections.reverb.key' => 'local',
+            'broadcasting.connections.reverb.options.host' => '127.0.0.1',
+        ]);
+
+        $this->getJson('/display-config')->assertStatus(503);
     }
 
     public function test_invalid_pixel_colors_are_rejected_without_changing_the_display(): void

@@ -30,9 +30,11 @@ class DisplayStateController extends Controller
         $connection = config('broadcasting.connections.reverb');
         $host = $connection['options']['host'] ?? null;
         $key = $connection['key'] ?? null;
+        $localHosts = ['127.0.0.1', 'localhost', '0.0.0.0', '::1'];
 
         abort_if(
-            ! is_string($host) || $host === '' || ! is_string($key) || $key === '',
+            ! is_string($host) || $host === '' || in_array($host, $localHosts, true) ||
+                ! is_string($key) || $key === '',
             503,
             'The WebSocket application is not configured.',
         );
