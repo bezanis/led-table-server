@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/opt/homebrew/Cellar/php@8.3/8.3.22/bin/php",
+            "args": [
+                "/Users/johnbezanis/Documents/PlatformIO/Projects/led-table-server/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
